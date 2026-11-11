@@ -41,7 +41,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 function addQuickContact(){
  if(document.querySelector('.hp-quick-contact'))return;
  var path=location.pathname.toLowerCase();
- if(/(?:^|\/)(?:contacts\.htm|index\.htm|index\.html)$/.test(path))return;
+if(path==='/'||path.endsWith('/')||/(?:^|\/)(?:contacts\.htm|index\.htm|index\.html)$/.test(path))return;
  var el=document.createElement('div');el.className='hp-quick-contact';
  if(/mobile_milking_machines/i.test(path))el.classList.add('hp-quick-on-detail');
  if(/(?:^|\/)cart\.html$/.test(path))el.classList.add('hp-quick-on-cart');
