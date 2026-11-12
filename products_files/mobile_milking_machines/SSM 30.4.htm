@@ -90,7 +90,7 @@ body>div[align="center"],body>div[align="center"]>center,body>div[align="center"
   }
 }
 </style><style>.hp-cart-shade{display:none!important}</style><script id="hp-original-caption-i18n">(function(){
-var captions={"en": "Vacuum pump & Air tube for Parlour milking machines", "tr": "Sağımhane süt sağım makineleri için vakum pompası ve hava hortumu", "ar": "مضخة تفريغ وخرطوم هواء لآلات الحلب في المحلب", "fa": "پمپ وکیوم و شیلنگ هوا برای دستگاه‌های شیردوشی سالن"};
+var captions={"en": "Vacuum pump & Air tube for Parlour milking machines", "tr": "Sağımhane süt sağım makineleri için vakum pompası ve hava hortumu", "ar": "مضخة تفريغ وخرطوم هواء لآلات الحلب في المحلب", "fa": "پمپ وکیوم و شیلنگ هوا برای دستگاه‌های شیردوشی سالن", "de": "Vakuumpumpe und Luftleitung für Melkstände"};
 function run(){
  var target=Array.prototype.find.call(document.querySelectorAll('td[background]'),function(td){return /urunalti\.gif/i.test(td.getAttribute('background')||'');});
  if(!target)return;
@@ -433,7 +433,7 @@ html body .hp-detail-actions .hp-detail-quantity input.hp-qty-input {
 })();
 </script>
 <link rel="stylesheet" href="../../hp-shop.css">
-<script defer src="../../hp-shop.js"></script><script>(function(){var lang='en';try{lang=localStorage.getItem('hpmilk_lang')||'en'}catch(e){}var t={en:['Add Product ',' to Cart','Shopping Cart','✓ Added Product '],tr:['Ürün ',' Sepete Ekle','Alışveriş Sepeti','✓ Ürün Eklendi '],ar:['أضف المنتج ',' إلى السلة','سلة التسوق','✓ تمت إضافة المنتج '],fa:['افزودن محصول ',' به سبد خرید','سبد خرید','✓ محصول اضافه شد ']};var words=t[lang]||t.en;function apply(){var a=document.getElementById('hp-detail-add'),b=document.getElementById('hp-detail-cart');if(a){var m=a.textContent.match(/\d+/),id=m?m[0]:'1';a.textContent=words[0]+id+words[1];a.addEventListener('click',function(){setTimeout(function(){a.textContent=words[3]+id},50)},true)}if(b){var n=b.querySelector('#hp-detail-count');b.textContent='🛒 '+words[2]+' (';if(n)b.appendChild(n);b.append(')')}}if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',apply);else apply();})();</script><style id="hp-detail-quantity-style">
+<script defer src="../../hp-shop.js"></script><script>(function(){var lang='en';try{lang=localStorage.getItem('hpmilk_lang')||'en'}catch(e){}var t={en:['Add Product ',' to Cart','Shopping Cart','✓ Added Product '],tr:['Ürün ',' Sepete Ekle','Alışveriş Sepeti','✓ Ürün Eklendi '],ar:['أضف المنتج ',' إلى السلة','سلة التسوق','✓ تمت إضافة المنتج '],fa:['افزودن محصول ',' به سبد خرید','سبد خرید','✓ محصول اضافه شد '],de:['Produkt ',' in den Warenkorb','Warenkorb','✓ Produkt hinzugefügt: ']};var words=t[lang]||t.en;function apply(){var a=document.getElementById('hp-detail-add'),b=document.getElementById('hp-detail-cart');if(a){var m=a.textContent.match(/\d+/),id=m?m[0]:'1';a.textContent=words[0]+id+words[1];a.addEventListener('click',function(){setTimeout(function(){a.textContent=words[3]+id},50)},true)}if(b){var n=b.querySelector('#hp-detail-count');b.textContent='🛒 '+words[2]+' (';if(n)b.appendChild(n);b.append(')')}}if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',apply);else apply();})();</script><style id="hp-detail-quantity-style">
 .hp-detail-quantity{display:inline-flex;align-items:center;gap:5px;direction:ltr;background:white;border:1px solid #cbd5e1;border-radius:10px;padding:4px;margin:0 6px 8px 0;vertical-align:middle}
 .hp-detail-quantity button{height:42px;width:44px;border:0;border-radius:8px;background:#159df5;color:white;font:bold 24px Arial;cursor:pointer}
 .hp-detail-quantity input{width:76px;height:40px;box-sizing:border-box;border:1px solid #b6beca;border-radius:7px;text-align:center;background:white;color:#111;font:bold 18px Arial;direction:ltr;appearance:textfield;-moz-appearance:textfield}
@@ -502,7 +502,7 @@ function init(){
  if(!id)return;
  var row=document.createElement('span');row.className='hp-detail-quantity';
  row.innerHTML='<span class="hp-qty-caption"></span><button type="button" class="qminus" aria-label="Decrease quantity">−</button><input type="text" class="qnumber hp-qty-input" style="background:#fff!important;background-color:#fff!important;background-image:linear-gradient(#fff,#fff)!important;color:#111!important;-webkit-text-fill-color:#111!important;color-scheme:light!important;border:2px solid #cbd5e1!important" min="0" max="99999" step="1" inputmode="numeric" aria-label="Quantity"><button type="button" class="qplus" aria-label="Increase quantity">+</button>';
- var input=row.querySelector('input');var lang='en';try{lang=localStorage.getItem('hpmilk_lang')||'en'}catch(e){};var labels={en:'Add to Cart',tr:'Sepete Ekle',ar:'أضف إلى السلة',fa:'افزودن به سبد کالا'};row.querySelector('.hp-qty-caption').textContent=labels[lang]||labels.en;
+ var input=row.querySelector('input');var lang='en';try{lang=localStorage.getItem('hpmilk_lang')||'en'}catch(e){};var labels={en:'Add to Cart',tr:'Sepete Ekle',ar:'أضف إلى السلة',fa:'افزودن به سبد کالا',de:'In den Warenkorb'};row.querySelector('.hp-qty-caption').textContent=labels[lang]||labels.en;
  function load(){try{return JSON.parse(localStorage.getItem('hpmilk_order_cart_v1')||'{}')||{}}catch(e){return {}}}
  function get(){var c=load();return c[id]?Number(c[id].qty)||0:0}
  function update(raw){var n=Math.max(0,Math.min(99999,Math.floor(Number(raw)||0)));var c=load();if(n){if(!c[id])c[id]={id:id,name:'محصول شماره '+id,qty:n};else c[id].qty=n;}else delete c[id];try{localStorage.setItem('hpmilk_order_cart_v1',JSON.stringify(c))}catch(e){}input.value=String(n);window.dispatchEvent(new Event('hpmilk-cart-changed'));var count=Object.values(c).reduce(function(t,x){return t+(Number(x.qty)||0)},0);var label=document.getElementById('hp-detail-count');if(label)label.textContent=String(count);}
@@ -559,7 +559,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
   if(document.querySelector('.hp-detail-number-badge'))return;
   var b=document.createElement('div');b.className='hp-detail-number-badge';
   var lang='en';try{lang=localStorage.getItem('hpmilk_lang')||'en'}catch(e){}
-  var labels={en:'Product No. ',tr:'Ürün No. ',ar:'المنتج رقم ',fa:'محصول شماره '};
+  var labels={en:'Product No. ',tr:'Ürün No. ',ar:'المنتج رقم ',fa:'محصول شماره ',de:'Produkt-Nr. '};
   b.textContent=(labels[lang]||labels.en)+productId;
   document.body.appendChild(b);
  }
@@ -753,6 +753,8 @@ html body input.qnumber {
  window.addEventListener('pageshow',fix);
 })();
 </script>
+
+<link rel="stylesheet" href="../../hp-language.css"><script defer src="../../hp-language.js"></script>
 </body>
 
 </html>

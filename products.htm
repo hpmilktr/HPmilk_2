@@ -218,7 +218,7 @@ html,body{background:#111416;color:#f3f5f7;font-family:Arial,Helvetica,sans-seri
 
 @media(max-width:700px){
  html,body{width:100%!important;max-width:100%!important;overflow:hidden!important;}
- iframe.top{height:176px!important;}
+ iframe.top{height:202px!important;}
  .main{height:calc(100dvh - 236px)!important;min-height:0!important;overflow-x:hidden!important;overflow-y:auto!important;padding:12px 0 20px!important;}
  iframe.bottom{height:60px!important;}
  .main>br{display:none!important;}
@@ -231,7 +231,7 @@ html,body{background:#111416;color:#f3f5f7;font-family:Arial,Helvetica,sans-seri
 }
 
 </style>
-<style>.hp-cart-shade{display:none!important}</style></meta><style id="hp-iframe-flag-height">iframe.top{height:176px!important;display:block!important;border:0!important;width:100%!important}</style><style id="hp-gallery-quantity-style">
+<style>.hp-cart-shade{display:none!important}</style></meta><style id="hp-iframe-flag-height">iframe.top{height:202px!important;display:block!important;border:0!important;width:100%!important}</style><style id="hp-gallery-quantity-style">
 .hp-gallery-actions{align-items:center!important;justify-content:center!important;flex-wrap:wrap!important;gap:10px!important}
 .hp-gallery-quantity{display:inline-flex!important;align-items:center!important;justify-content:center!important;gap:5px!important;direction:ltr!important;background:#fff!important;border:1px solid #cbd5e1!important;border-radius:10px!important;padding:4px!important;box-sizing:border-box!important}
 .hp-gallery-actions .hp-gallery-quantity button{display:flex!important;align-items:center!important;justify-content:center!important;min-width:40px!important;height:40px!important;padding:0!important;border:0!important;background:#159df5!important;color:#fff!important;font:bold 23px Arial!important;border-radius:7px!important}
@@ -713,7 +713,7 @@ html,body{background:#111416;color:#f3f5f7;font-family:Arial,Helvetica,sans-seri
   function onKey(e){if(e.key==='Escape')closeLightbox();else if(e.key==='ArrowLeft')showLarge(lbIndex+1);else if(e.key==='ArrowRight')showLarge(lbIndex-1);}
 
   function galleryLang(){return (window.HPMILKLanguage&&window.HPMILKLanguage.get())||localStorage.getItem('hpmilk_lang')||'en'}
-  function galleryText(key,id){var dict={en:{product:'Product No. ',add:'Add Product '+id+' to Cart',added:'✓ Added',cart:'Shopping Cart',qtyLabel:'Add to Cart'},tr:{product:'Ürün No. ',add:'Ürün '+id+' Sepete Ekle',added:'✓ Eklendi',cart:'Alışveriş Sepeti',qtyLabel:'Sepete Ekle'},ar:{product:'المنتج رقم ',add:'أضف المنتج '+id+' إلى السلة',added:'✓ تمت الإضافة',cart:'سلة التسوق',qtyLabel:'أضف إلى السلة'},fa:{product:'محصول شماره ',add:'افزودن محصول '+id+' به سبد',added:'✓ اضافه شد',cart:'سبد خرید',qtyLabel:'افزودن به سبد کالا'}};return (dict[galleryLang()]||dict.en)[key]}
+  function galleryText(key,id){var dict={en:{product:'Product No. ',add:'Add Product '+id+' to Cart',added:'✓ Added',cart:'Shopping Cart',qtyLabel:'Add to Cart'},tr:{product:'Ürün No. ',add:'Ürün '+id+' Sepete Ekle',added:'✓ Eklendi',cart:'Alışveriş Sepeti',qtyLabel:'Sepete Ekle'},ar:{product:'المنتج رقم ',add:'أضف المنتج '+id+' إلى السلة',added:'✓ تمت الإضافة',cart:'سلة التسوق',qtyLabel:'أضف إلى السلة'},fa:{product:'محصول شماره ',add:'افزودن محصول '+id+' به سبد',added:'✓ اضافه شد',cart:'سبد خرید',qtyLabel:'افزودن به سبد کالا'},de:{product:'Produkt-Nr. ',add:'Produkt '+id+' in den Warenkorb',added:'✓ Hinzugefügt',cart:'Warenkorb',qtyLabel:'In den Warenkorb'}};return (dict[galleryLang()]||dict.en)[key]}
   function openGalleryTab(slides,index,source){
     openLightbox(slides,index);
     var td=source && source.closest('td');

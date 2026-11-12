@@ -15,7 +15,7 @@ info:'<circle cx="12" cy="12" r="10"/><path d="M12 11v6M12 7h.01"/>'
 };
 function icon(name){return '<svg viewBox="0 0 24 24" aria-hidden="true">'+svg[name]+'</svg>'}
 function lang(){try{return localStorage.getItem('hpmilk_lang')||'en'}catch(e){return 'en'}}
-function word(key){var d={home:{en:'Home',tr:'Ana Sayfa',ar:'الرئيسية',fa:'خانه'},products:{en:'Products',tr:'Ürünler',ar:'المنتجات',fa:'محصولات'},cart:{en:'Shopping Cart',tr:'Alışveriş Sepeti',ar:'سلة التسوق',fa:'سبد خرید'},contact:{en:'Contact',tr:'İletişim',ar:'اتصل بنا',fa:'تماس'},info:{en:'About us',tr:'Hakkımızda',ar:'من نحن',fa:'درباره ما'}};return (d[key]||{})[lang()]||(d[key]||{}).en||key}
+function word(key){var d={home:{en:'Home',tr:'Ana Sayfa',ar:'الرئيسية',fa:'خانه',de:'Startseite'},products:{en:'Products',tr:'Ürünler',ar:'المنتجات',fa:'محصولات',de:'Produkte'},cart:{en:'Shopping Cart',tr:'Alışveriş Sepeti',ar:'سلة التسوق',fa:'سبد خرید',de:'Warenkorb'},contact:{en:'Contact',tr:'İletişim',ar:'اتصل بنا',fa:'تماس',de:'Kontakt'},info:{en:'About us',tr:'Hakkımızda',ar:'من نحن',fa:'درباره ما',de:'Über uns'}};return (d[key]||{})[lang()]||(d[key]||{}).en||key}
 function update(){document.querySelectorAll('.hp-bubble').forEach(function(el){var n=count();el.textContent=n;el.style.display=n?'block':'none';if(el.parentElement&&el.parentElement.id==='hp-desktop-cart'){el.nextSibling.textContent=n?')':'';el.previousSibling.textContent=('🛒 '+word('cart'))+(n?' (':'')}})}
 function init(){
 if(document.getElementById('hp-mobile-nav'))return;
