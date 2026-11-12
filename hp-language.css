@@ -43,8 +43,8 @@ body > table a[href] .hp-nav-visible-label{position:absolute!important;inset:0!i
 #hpmilkIntro #hp-language-picker.hp-intro-picker{display:flex!important;margin:14px auto 0!important;position:relative!important;z-index:10!important;justify-content:center!important}
 #hpmilkIntro #hp-language-picker .hp-language-menu{right:50%!important;transform:translateX(50%)!important;text-shadow:none!important}
 /* Avoid cutting off menu buttons after adding flag below logo */
-.hp-top-region{height:200px!important;min-height:200px!important;overflow:visible!important}
-.hp-top-region>table{height:200px!important}
+.hp-top-region{height:174px!important;min-height:174px!important;overflow:visible!important}
+.hp-top-region>table{height:174px!important}
 @media(max-width:700px){.hp-top-region{height:auto!important;min-height:172px!important;overflow:visible!important}.hp-top-region>table{height:auto!important}}
 
 /* Compact visible four-language dropdown in the legacy embedded header. */

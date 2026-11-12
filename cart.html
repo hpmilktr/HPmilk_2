@@ -60,18 +60,8 @@ function lang(){try{return localStorage.getItem('hpmilk_lang')||'en'}catch(e){re
 // Chrome Translate changes visible text, but does not translate JavaScript strings.
 // Detect supported translated languages from the actual form labels at send time.
 function orderLang(){
- if(['en','tr','ar','fa','de'].includes(lang()))return lang();
- // Read the translated text visible to the customer, not the original HTML language.
- var fields=Array.from(document.querySelectorAll('#form label')).map(function(el){return el.textContent||''}).join(' ');
- var heading=(document.querySelector('#checkout h2')||{}).textContent||'';
- var sample=(fields+' '+heading).toLowerCase().replace(/\s+/g,' ');
- // Arabic and Persian share a script, so script detection alone is insufficient.
- if(/(?:الاسم|الاسم الكامل|الاسم واللقب|رقم الهاتف|رقم الجوال|البريد الإلكتروني|البريد الالكتروني|المدينة|الدولة|البلد|العنوان|الملاحظات|إرسال الطلب|ارسال الطلب|تأكيد الطلب|إتمام الطلب|إتمام الشراء|اطلب الآن)/.test(sample))return 'ar';
- if(/(?:نام و نام خانوادگی|نام کامل|شماره تماس|شماره تلفن|شهر \/ کشور|کشور|آدرس و توضیحات|ثبت سفارش|ارسال سفارش|توضیحات)/.test(sample))return 'fa';
- if(/(?:ad soyad|adınız|telefon|şehir|ülke|sipariş|e.posta|e-posta|notlar|gönder|adres)/i.test(sample))return 'tr';
- // If the browser translated to an Arabic-script language, do not assume Persian.
- if(/[\u0600-\u06ff]/.test(sample))return /[پچژگکی]/.test(sample)?'fa':'ar';
- return 'en';
+ var selected=lang();
+ return ['en','tr','ar','fa','de'].includes(selected)?selected:'en';
 }
 
 var hpCartProductImages={"1":"products_files/1.gif","2":"products_files/2.gif","3":"products_files/4.gif","4":"products_files/7.jpg","5":"products_files/3.gif","6":"products_files/5.gif","7":"products_files/6.gif","8":"products_files/8b%23U0131g.jpg","9":"products_files/25.jpg","10":"products_files/Receiver-32L.jpg","11":"products_files/Automatic%20parlours/01.jpg","12":"products_files/Rece%23U0131ver-50L-Westfal%23U0131a.jpg","13":"products_files/m13.jpg","14":"products_files/Automatic%20parlours/L1.jpg","15":"products_files/Automatic%20parlours/L2.jpg","16":"products_files/Automatic%20parlours/L3.jpg","17":"products_files/p14.jpg","18":"products_files/v-p-1500.jpg","19":"products_files/v-p-2200.jpg","20":"products_files/v-p-3300.jpg","21":"products_files/32.jpg","22":"products_files/30.bmp","23":"products_files/31.bmp"};
@@ -92,74 +82,62 @@ function productThumb(id){
 }
 
 function render(){
- var language=lang(),fa=language==='fa',tr=language==='tr',ar=language==='ar',de=language==='de',all=list(),n=all.reduce(function(a,x){return a+Number(x.qty)},0);
+ var language=lang(),all=list(),n=all.reduce(function(a,x){return a+Number(x.qty)},0);
+ var t={
+  en:{product:'Product No. ',productSmall:'Product No.: ',price:'Price on request',plus:'Increase quantity',minus:'Decrease quantity',remove:'Remove from cart',total:'🛒 Shopping Cart ('+n+')'},
+  tr:{product:'Ürün No. ',productSmall:'Ürün No.: ',price:'Fiyat sorunuz',plus:'Adedi artır',minus:'Adedi azalt',remove:'Sepetten kaldır',total:'🛒 Alışveriş Sepeti ('+n+')'},
+  ar:{product:'المنتج رقم ',productSmall:'رقم المنتج: ',price:'السعر عند الطلب',plus:'زيادة الكمية',minus:'تقليل الكمية',remove:'إزالة من السلة',total:'🛒 سلة التسوق ('+n+')'},
+  fa:{product:'محصول شماره ',productSmall:'شماره محصول: ',price:'قیمت توافقی',plus:'افزایش تعداد',minus:'کاهش تعداد',remove:'حذف از سبد',total:'🛒 سبد خرید ('+n+')'},
+  de:{product:'Produkt-Nr. ',productSmall:'Produkt-Nr.: ',price:'Preis auf Anfrage',plus:'Menge erhöhen',minus:'Menge verringern',remove:'Aus dem Warenkorb entfernen',total:'🛒 Warenkorb ('+n+')'}
+ }[language]||null;
  document.getElementById('items').innerHTML=all.map(function(x){
- var name=fa?('محصول شماره '+x.id):tr?('Ürün No. '+x.id):ar?('المنتج رقم '+x.id):de?('Produkt Nr. '+x.id):('Product No. '+x.id);
- return '<article class="item"><div class="hp-cart-product-info">'+productThumb(x.id)+'<div class="name">'+esc(name)+'<small>'+(fa?'شماره محصول: ':tr?'Ürün No.: ':ar?'رقم المنتج: ':de?'Produkt-Nr.: ':'Product No.: ')+esc(x.id)+(fa?' · قیمت توافقی':tr?' · Fiyat sorunuz':ar?' · السعر عند الطلب':de?' · Preis auf Anfrage':' · Price on request')+'</small></div></div><div class="qty"><button data-id="'+esc(x.id)+'" data-op="plus" aria-label="'+(fa?'افزایش تعداد':tr?'Adedi artır':ar?'زيادة الكمية':de?'Menge erhöhen':'Increase quantity')+'">+</button><b>'+Number(x.qty)+'</b><button data-id="'+esc(x.id)+'" data-op="minus" aria-label="'+(fa?'کاهش تعداد':tr?'Adedi azalt':ar?'تقليل الكمية':de?'Menge verringern':'Decrease quantity')+'">−</button></div><button class="remove" data-id="'+esc(x.id)+'" data-op="remove">'+(fa?'حذف از سبد':tr?'Sepetten kaldır':ar?'إزالة من السلة':de?'Aus dem Warenkorb entfernen':'Remove from cart')+'</button></article>'
+  var name=t.product+esc(x.id);
+  return '<article class="item"><div class="hp-cart-product-info">'+productThumb(x.id)+'<div class="name">'+name+'<small>'+t.productSmall+esc(x.id)+' · '+t.price+'</small></div></div><div class="qty"><button data-id="'+esc(x.id)+'" data-op="plus" aria-label="'+t.plus+'">+</button><b>'+Number(x.qty)+'</b><button data-id="'+esc(x.id)+'" data-op="minus" aria-label="'+t.minus+'">−</button></div><button class="remove" data-id="'+esc(x.id)+'" data-op="remove">'+t.remove+'</button></article>'
  }).join('');
  document.getElementById('empty').hidden=!!n;
- document.getElementById('total').textContent=fa?('🛒 سبد خرید ('+n+')'):tr?('🛒 Alışveriş Sepeti ('+n+')'):ar?('🛒 سلة التسوق ('+n+')'):de?('🛒 Warenkorb ('+n+')'):('🛒 Shopping Cart ('+n+')');
+ document.getElementById('total').textContent=t.total;
  document.getElementById('checkoutButton').disabled=!n;
  document.getElementById('checkoutButton').style.opacity=n?'1':'.5';
 }
-var translations={
- '🛒 سبد خرید HPmilk':'🛒 HPmilk Shopping Cart','ادامه انتخاب محصولات ←':'← Continue shopping','سبد خرید شما خالی است.':'Your cart is empty.','مشاهده محصولات':'View products','ثبت سفارش':'Place Order','پس از تکمیل مشخصات، سفارش را از طریق واتساپ یا ایمیل ارسال کنید. قیمت نهایی با فروشنده هماهنگ می‌شود.':'Complete your details and send your order via WhatsApp or email. Final pricing will be confirmed by the seller.','نام و نام خانوادگی *':'Full name *','شماره تماس / واتساپ *':'Phone / WhatsApp *','ایمیل':'Email','شهر / کشور':'City / Country','آدرس و توضیحات':'Address and notes','ارسال سفارش با واتساپ':'Send order via WhatsApp','ارسال سفارش با ایمیل':'Send order via email','قیمت پس از تأیید فروشنده':'Price confirmed by seller','۰ کالا':'0 items'
-};
 function applyLanguage(){
- var language=lang(), rtl=language==='fa'||language==='ar'; document.documentElement.lang=language;document.documentElement.dir=rtl?'rtl':'ltr';
- document.title=language==='fa'?'سبد خرید HPmilk':language==='tr'?'HPmilk Alışveriş Sepeti':language==='ar'?'سلة تسوق HPmilk':language==='de'?'HPmilk Warenkorb':'HPmilk Shopping Cart';
- const trn={
- '🛒 سبد خرید HPmilk':['🛒 HPmilk Shopping Cart','🛒 HPmilk Alışveriş Sepeti','🛒 سلة تسوق HPmilk','🛒 سبد خرید HPmilk','🛒 HPmilk Warenkorb'],
- 'ادامه انتخاب محصولات ←':['← Continue shopping','← Alışverişe devam et','← متابعة التسوق','← ادامه خرید','← Weiter einkaufen'],
- 'سبد خرید شما خالی است.':['Your cart is empty.','Sepetiniz boş.','سلة التسوق فارغة.','سبد خرید شما خالی است.','Ihr Warenkorb ist leer.'],
- 'مشاهده محصولات':['View products','Ürünleri Gör','عرض المنتجات','مشاهده محصولات','Produkte ansehen'],
- 'ثبت سفارش':['Place Order','Sipariş Ver','إرسال الطلب','ثبت سفارش','Bestellung aufgeben'],
- 'پس از تکمیل مشخصات، سفارش را از طریق واتساپ یا ایمیل ارسال کنید. قیمت نهایی با فروشنده هماهنگ می‌شود.':['Complete your details and send your order via WhatsApp or email. Final pricing will be confirmed by the seller.','Bilgilerinizi girerek siparişinizi WhatsApp veya e-posta ile gönderin. Son fiyat satıcı tarafından onaylanacaktır.','أكمل بياناتك وأرسل طلبك عبر واتساب أو البريد الإلكتروني. سيتم تأكيد السعر النهائي من البائع.','اطلاعات خود را تکمیل کرده و سفارش را از طریق واتساپ یا ایمیل ارسال کنید. قیمت نهایی با فروشنده هماهنگ می‌شود.','Bitte vervollständigen Sie Ihre Angaben und senden Sie Ihre Bestellung per WhatsApp oder E-Mail. Der Endpreis wird vom Verkäufer bestätigt.'],
- 'نام و نام خانوادگی *':['Full name *','Ad Soyad *','الاسم الكامل *','نام و نام خانوادگی *','Vollständiger Name *'],
- 'شماره تماس / واتساپ *':['Phone / WhatsApp *','Telefon / WhatsApp *','الهاتف / واتساب *','شماره تماس / واتساپ *','Telefon / WhatsApp *'],
- 'ایمیل':['Email','E-posta','البريد الإلكتروني','ایمیل','E-Mail'],
- 'شهر / کشور':['City / Country','Şehir / Ülke','المدينة / الدولة','شهر / کشور','Stadt / Land'],
- 'آدرس و توضیحات':['Address and notes','Adres ve notlar','العنوان والملاحظات','آدرس و توضیحات','Adresse und Hinweise'],
- 'ارسال سفارش با واتساپ':['Send order via WhatsApp','Siparişi WhatsApp ile Gönder','إرسال الطلب عبر واتساب','ارسال سفارش با واتساپ','Bestellung per WhatsApp senden'],
- 'ارسال سفارش با ایمیل':['Send order via email','Siparişi E-posta ile Gönder','إرسال الطلب عبر البريد الإلكتروني','ارسال سفارش با ایمیل','Bestellung per E-Mail senden'],
- 'قیمت پس از تأیید فروشنده':['Price confirmed by seller','Fiyat satıcı tarafından onaylanır','يؤكد البائع السعر','قیمت پس از تأیید فروشنده','Preis wird vom Verkäufer bestätigt']};
- const idx={en:0,tr:1,ar:2,fa:3,de:4}[language]||0;
- document.querySelectorAll('[data-i18n]').forEach(function(el){const v=trn[el.dataset.i18n];if(!v)return;const node=Array.from(el.childNodes).find(n=>n.nodeType===3&&n.textContent.trim());if(node)node.textContent=v[idx]});render();
+ var language=lang(),rtl=language==='fa'||language==='ar';
+ var dict={
+  en:{title:'HPmilk Shopping Cart',header:'🛒 HPmilk Shopping Cart',continue:'← Continue shopping',empty:'Your cart is empty.',view:'View products',place:'Place Order',intro:'Complete your details and send your order via WhatsApp or email. Final pricing will be confirmed by the seller.',full:'Full name *',phone:'Phone / WhatsApp *',email:'Email',city:'City / Country',address:'Address and notes',wa:'Send order via WhatsApp',sendEmail:'Send order via email',price:'Price confirmed by seller'},
+  tr:{title:'HPmilk Alışveriş Sepeti',header:'🛒 HPmilk Alışveriş Sepeti',continue:'← Alışverişe devam et',empty:'Sepetiniz boş.',view:'Ürünleri Gör',place:'Sipariş Ver',intro:'Bilgilerinizi girerek siparişinizi WhatsApp veya e-posta ile gönderin. Son fiyat satıcı tarafından onaylanacaktır.',full:'Ad Soyad *',phone:'Telefon / WhatsApp *',email:'E-posta',city:'Şehir / Ülke',address:'Adres ve notlar',wa:'Siparişi WhatsApp ile Gönder',sendEmail:'Siparişi E-posta ile Gönder',price:'Fiyat satıcı tarafından onaylanır'},
+  ar:{title:'سلة تسوق HPmilk',header:'🛒 سلة تسوق HPmilk',continue:'← متابعة التسوق',empty:'سلة التسوق فارغة.',view:'عرض المنتجات',place:'إرسال الطلب',intro:'أكمل بياناتك وأرسل طلبك عبر واتساب أو البريد الإلكتروني. سيتم تأكيد السعر النهائي من البائع.',full:'الاسم الكامل *',phone:'الهاتف / واتساب *',email:'البريد الإلكتروني',city:'المدينة / الدولة',address:'العنوان والملاحظات',wa:'إرسال الطلب عبر واتساب',sendEmail:'إرسال الطلب عبر البريد الإلكتروني',price:'يؤكد البائع السعر'},
+  fa:{title:'سبد خرید HPmilk',header:'🛒 سبد خرید HPmilk',continue:'← ادامه خرید',empty:'سبد خرید شما خالی است.',view:'مشاهده محصولات',place:'ثبت سفارش',intro:'اطلاعات خود را تکمیل کرده و سفارش را از طریق واتساپ یا ایمیل ارسال کنید. قیمت نهایی با فروشنده هماهنگ می‌شود.',full:'نام و نام خانوادگی *',phone:'شماره تماس / واتساپ *',email:'ایمیل',city:'شهر / کشور',address:'آدرس و توضیحات',wa:'ارسال سفارش با واتساپ',sendEmail:'ارسال سفارش با ایمیل',price:'قیمت پس از تأیید فروشنده'},
+  de:{title:'HPmilk Warenkorb',header:'🛒 HPmilk Warenkorb',continue:'← Weiter einkaufen',empty:'Ihr Warenkorb ist leer.',view:'Produkte ansehen',place:'Bestellung aufgeben',intro:'Bitte geben Sie Ihre Daten ein und senden Sie Ihre Bestellung per WhatsApp oder E-Mail. Der endgültige Preis wird vom Verkäufer bestätigt.',full:'Vor- und Nachname *',phone:'Telefon / WhatsApp *',email:'E-Mail',city:'Stadt / Land',address:'Adresse und Anmerkungen',wa:'Bestellung per WhatsApp senden',sendEmail:'Bestellung per E-Mail senden',price:'Preis wird vom Verkäufer bestätigt'}
+ }[language]||null;
+ document.documentElement.lang=language;document.documentElement.dir=rtl?'rtl':'ltr';document.title=dict.title;
+ var keys=['header','continue','empty','view','place','intro','full','phone','email','city','address','wa','sendEmail','price'];
+ var selectors=['header strong','header a','#empty',' #empty a','#checkout h2','#checkout p','#form label:nth-of-type(1)','#form label:nth-of-type(2)','#form label:nth-of-type(3)','#form label:nth-of-type(4)','#form label:nth-of-type(5)','#wa','#email','#summary small'];
+ selectors.forEach(function(sel,i){var el=document.querySelector(sel);if(!el)return;var value=dict[keys[i]];if(i===2){var textNode=Array.from(el.childNodes).find(function(n){return n.nodeType===3&&n.textContent.trim()});if(textNode)textNode.textContent=value;return;}if(i>=6&&i<=10){var input=el.querySelector('input,textarea');el.firstChild.textContent=value;if(input)return;}else if(i===0||i===1||i===4||i===5||i>=11){el.textContent=value;}});
+ var emptyLink=document.querySelector('#empty a');if(emptyLink)emptyLink.textContent=dict.view;
+ document.getElementById('checkoutButton').textContent=dict.place;
+ render();
 }
-
 
 document.getElementById('items').onclick=function(e){var b=e.target.closest('[data-op]');if(!b)return;var id=b.dataset.id,op=b.dataset.op;if(!cart[id])return;if(op==='plus')cart[id].qty++;else if(op==='minus')cart[id].qty--;else cart[id].qty=0;if(cart[id].qty<=0)delete cart[id];save()};
 document.getElementById('checkoutButton').onclick=function(){if(!list().length)return;document.getElementById('checkout').classList.add('open');document.getElementById('checkout').scrollIntoView({behavior:'smooth',block:'start'})};
 function message(channel){
- var f=document.getElementById('form');
- if(!f.reportValidity())return null;
- var data=new FormData(f),language=orderLang(),fa=language==='fa',tr=language==='tr',ar=language==='ar';
- function digits(value){
-  var ascii=String(value).replace(/[۰-۹]/g,function(c){return String(c.charCodeAt(0)-1776)}).replace(/[٠-٩]/g,function(c){return String(c.charCodeAt(0)-1632)});
-  return fa?ascii.replace(/[0-9]/g,function(c){return '۰۱۲۳۴۵۶۷۸۹'[Number(c)]}):ascii;
- }
- var words=ar?{product:'المنتج رقم ',quantity:'الكمية: ',total:'إجمالي عدد المنتجات: ',name:'الاسم: ',phone:'الهاتف: ',email:'البريد الإلكتروني: ',city:'المدينة / الدولة: ',notes:'العنوان والملاحظات: ',heading:'HPmilk - طلب جديد',closing:'يرجى تأكيد السعر وتكلفة الشحن.'}:
- fa?{product:'محصول شماره ',quantity:'تعداد: ',total:'جمع کل تعداد کالاها: ',name:'نام: ',phone:'تلفن: ',email:'ایمیل: ',city:'شهر / کشور: ',notes:'آدرس و توضیحات: ',heading:'HPmilk - سفارش جدید',closing:'لطفاً قیمت و هزینه ارسال را اعلام کنید.'}:
- tr?{product:'Ürün No. ',quantity:'Adet: ',total:'Toplam ürün adedi: ',name:'Ad Soyad: ',phone:'Telefon: ',email:'E-posta: ',city:'Şehir / Ülke: ',notes:'Adres ve notlar: ',heading:'HPmilk - Yeni Sipariş',closing:'Lütfen fiyatı ve kargo ücretini bildiriniz.'}:
- {product:'Product No. ',quantity:'Quantity: ',total:'Total Quantities: ',name:'Name: ',phone:'Phone: ',email:'Email: ',city:'City / Country: ',notes:'Address and notes: ',heading:'HPmilk - New Order',closing:'Please confirm the price and shipping cost.'};
- var products=list().map(function(x){
-  var label=words.product+digits(x.id),name=fa?(x.name||label):label;
-  return name+' | '+words.quantity+digits(x.qty);
- }).join('\n');
+ var f=document.getElementById('form');if(!f.reportValidity())return null;
+ var data=new FormData(f),language=orderLang();
+ var words={
+  en:{product:'Product No. ',quantity:'Quantity: ',total:'Total quantities: ',name:'Name: ',phone:'Phone: ',email:'Email: ',city:'City / Country: ',notes:'Address and notes: ',heading:'HPmilk - New Order',closing:'Please confirm the price and shipping cost.',subject:'HPmilk - New Order'},
+  tr:{product:'Ürün No. ',quantity:'Adet: ',total:'Toplam ürün adedi: ',name:'Ad Soyad: ',phone:'Telefon: ',email:'E-posta: ',city:'Şehir / Ülke: ',notes:'Adres ve notlar: ',heading:'HPmilk - Yeni Sipariş',closing:'Lütfen fiyatı ve kargo ücretini teyit edin.',subject:'HPmilk - Yeni Sipariş'},
+  ar:{product:'المنتج رقم ',quantity:'الكمية: ',total:'إجمالي عدد المنتجات: ',name:'الاسم: ',phone:'الهاتف: ',email:'البريد الإلكتروني: ',city:'المدينة / الدولة: ',notes:'العنوان والملاحظات: ',heading:'HPmilk - طلب جديد',closing:'يرجى تأكيد السعر وتكلفة الشحن.',subject:'HPmilk - طلب جديد'},
+  fa:{product:'محصول شماره ',quantity:'تعداد: ',total:'مجموع تعداد کالاها: ',name:'نام: ',phone:'تلفن: ',email:'ایمیل: ',city:'شهر / کشور: ',notes:'آدرس و توضیحات: ',heading:'HPmilk - سفارش جدید',closing:'لطفاً قیمت و هزینه ارسال را تأیید کنید.',subject:'HPmilk - سفارش جدید'},
+  de:{product:'Produkt-Nr. ',quantity:'Menge: ',total:'Gesamtmenge: ',name:'Name: ',phone:'Telefon: ',email:'E-Mail: ',city:'Stadt / Land: ',notes:'Adresse und Anmerkungen: ',heading:'HPmilk - Neue Bestellung',closing:'Bitte bestätigen Sie den Preis und die Versandkosten.',subject:'HPmilk - Neue Bestellung'}
+ }[language]||null;
+ function digits(value){var out=String(value).replace(/[۰-۹]/g,function(c){return String(c.charCodeAt(0)-1776)}).replace(/[٠-٩]/g,function(c){return String(c.charCodeAt(0)-1632)});if(language==='fa')out=out.replace(/[0-9]/g,function(c){return '۰۱۲۳۴۵۶۷۸۹'[Number(c)]});return out;}
+ var products=list().map(function(x){return words.product+digits(x.id)+' | '+words.quantity+digits(x.qty)}).join('\n');
  var totalQty=list().reduce(function(sum,x){return sum+Number(x.qty||0)},0);
- // Emphasize the real sum of quantities, not the number of different products.
- // WhatsApp supports *bold* plain-text formatting; mailto supports plain text only.
  var totalText=words.total+digits(totalQty);
- var totalBlock=channel==='whatsapp'
-   ? '🔴━━━━━━━━━━━━━━━━━━🔴\n*🛒 '+totalText+'*\n🔴━━━━━━━━━━━━━━━━━━🔴'
-   : '🟥━━━━━━━━━━━━━━━━━━🟥\n🛒  '+totalText+'\n🟥━━━━━━━━━━━━━━━━━━🟥';
- return words.heading+'\n\n'+products+'\n\n'+totalBlock+'\n\n'+
-  words.name+(data.get('customer')||'')+'\n'+words.phone+(data.get('phone')||'')+'\n'+
-  words.email+(data.get('email')||'')+'\n'+words.city+(data.get('location')||'')+'\n'+
-  words.notes+(data.get('notes')||'')+'\n\n'+words.closing;
+ var totalBlock=channel==='whatsapp'?'🛒 *'+totalText+'*':'🛒 '+totalText;
+ return words.heading+'\n\n'+products+'\n\n'+totalBlock+'\n\n'+words.name+(data.get('customer')||'')+'\n'+words.phone+(data.get('phone')||'')+'\n'+words.email+(data.get('email')||'')+'\n'+words.city+(data.get('location')||'')+'\n'+words.notes+(data.get('notes')||'')+'\n\n'+words.closing;
 }
 document.getElementById('wa').onclick=function(){var m=message('whatsapp');if(m)window.open('https://wa.me/905316216031?text='+encodeURIComponent(m),'_blank','noopener')};
-document.getElementById('email').onclick=function(){var m=message('email');if(m)location.href='mailto:hpmilk.tr@gmail.com?subject='+encodeURIComponent(orderLang()==='ar'?'HPmilk - طلب جديد':orderLang()==='fa'?'HPmilk - سفارش جدید':orderLang()==='tr'?'HPmilk - Yeni Sipariş':'HPmilk product order')+'&body='+encodeURIComponent(m)};
+document.getElementById('email').onclick=function(){var m=message('email');if(m){var l=orderLang(),subjects={en:'HPmilk - New Order',tr:'HPmilk - Yeni Sipariş',ar:'HPmilk - طلب جديد',fa:'HPmilk - سفارش جدید',de:'HPmilk - Neue Bestellung'};location.href='mailto:hpmilk.tr@gmail.com?subject='+encodeURIComponent(subjects[l]||subjects.en)+'&body='+encodeURIComponent(m)}};
 window.addEventListener('storage',function(){load();render()});window.addEventListener('pageshow',function(){load();render()});window.addEventListener('focus',function(){load();render()});load();applyLanguage();
 })();
 </script><link rel="stylesheet" href="hp-language.css"><script defer src="hp-language.js"></script></body></html>
