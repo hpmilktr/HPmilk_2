@@ -145,7 +145,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 .hp-contact-form label:has(textarea),.hp-contact-form-buttons{grid-column:1/-1;}
 .hp-contact-form-buttons{display:flex;justify-content:space-between;gap:12px;}
 .hp-contact-form-buttons input{padding:8px 18px;border:0;border-radius:6px;cursor:pointer;}
-.hp-contact-shortcuts{max-width:68px!important;width:68px!important;justify-content:center!important;margin:8px auto 8px!important;padding:0!important;}
+.hp-contact-shortcuts{max-width:310px!important;width:100%!important;justify-content:space-between!important;gap:18px!important;margin:42px auto 16px!important;padding:0 6px!important;}
 .hp-contact-shortcuts a{width:58px!important;height:58px!important;flex:0 0 58px!important;max-width:58px!important;max-height:58px!important;}
 .hp-contact-shortcuts img{width:58px!important;height:58px!important;max-width:58px!important;max-height:58px!important;}
 @media(max-width:700px){
@@ -154,7 +154,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
  .hp-contact-form label:has(textarea),.hp-contact-form-buttons{grid-column:auto;}
  .hp-contact-form input:not([type=submit]):not([type=reset]),.hp-contact-form textarea{padding:8px!important;}
  .hp-contact-form textarea{min-height:75px!important;}
- .hp-contact-shortcuts{margin:8px auto!important;}
+ .hp-contact-shortcuts{max-width:280px!important;margin:28px auto 14px!important;gap:14px!important;}
 }
 </style>
 
@@ -207,8 +207,12 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
     <p>For further information fill in the form or contact us at the address below:</p>
     <p class="hp-office-title"><strong>Head Office:</strong></p>
     <p>Kavakli Mah, Bilim Sok, A Blok No:7/1<br>Beylikdüzü / Istanbul</p>
-    <p class="hp-mobile-line"><a class="hp-inline-phone" href="tel:+905316216031" aria-label="Call HPmilk" title="Call HPmilk"><img src="hp-contact-icons/phone.svg" alt="Phone"></a><strong>+90-5316216031</strong></p>
   </section>
+  <nav class="hp-contact-shortcuts" aria-label="Contact options">
+    <a href="tel:+905316216031" aria-label="Call HPmilk" title="Phone"><img src="hp-contact-icons/phone.svg" alt="Phone"></a>
+    <a href="mailto:hpmilk.tr@gmail.com" aria-label="Email HPmilk" title="Email"><img src="hp-contact-icons/email.svg" alt="Email"></a>
+    <a href="https://wa.me/905316216031" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp HPmilk" title="WhatsApp"><img src="hp-contact-icons/whatsapp.svg" alt="WhatsApp"></a>
+  </nav>
   <div class="hp-contact-form-section">
     <div class="hp-contact-form-heading" id="hp-contact-form-label">Send a message</div>
     <form class="hp-contact-form" action="mailto:hpmilk.tr@gmail.com" enctype="text/plain" method="post" onsubmit="return typeof checkData === 'function' ? checkData(this) : true">
