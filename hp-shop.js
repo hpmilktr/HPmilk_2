@@ -41,7 +41,8 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 function addQuickContact(){
  if(document.querySelector('.hp-quick-contact'))return;
  var path=location.pathname.toLowerCase();
-if(path==='/'||path.endsWith('/')||/(?:^|\/)(?:index\.htm|index\.html)$/.test(path))return;
+ // Show floating quick-contact only on the Welcome and Contact pages, not on product/detail or other internal pages.
+ if(!/(?:^|\/)(?:welcome\.htm|contacts\.htm)$/.test(path))return;
  var el=document.createElement('div');el.className='hp-quick-contact';
  if(/mobile_milking_machines/i.test(path))el.classList.add('hp-quick-on-detail');
  if(/(?:^|\/)cart\.html$/.test(path))el.classList.add('hp-quick-on-cart');
