@@ -47,7 +47,7 @@ body > table a[href] .hp-nav-visible-label{position:absolute!important;inset:0!i
 .hp-top-region>table{height:174px!important}
 @media(max-width:700px){.hp-top-region{height:auto!important;min-height:172px!important;overflow:visible!important}.hp-top-region>table{height:auto!important}}
 
-/* Compact visible four-language dropdown in the legacy embedded header. */
+/* Compact five-language dropdown (EN, TR, AR, FA, DE) in the embedded header. */
 #hp-language-picker .hp-language-menu{
  top:calc(100% + 3px)!important;
  right:0!important;left:auto!important;

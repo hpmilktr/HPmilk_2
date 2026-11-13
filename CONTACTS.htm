@@ -35,7 +35,11 @@ html,body{margin:0;padding:0;width:100%;background:#111416;color:#f4f5f6;}
 }
 
 </style>
-<style id="hp-no-cart-on-this-page">#hp-desktop-cart,#hp-mobile-nav,.hp-cart-launch,.hp-cart-shade,.hp-cart-float,.hp-cart-button{display:none!important}</style>
+<style id="hp-no-cart-on-this-page">
+/* Hide ordering controls on the Contact page, but keep the floating headset/support shortcut visible. */
+#hp-desktop-cart,#hp-mobile-nav,.hp-cart-launch,.hp-cart-shade,.hp-cart-button{display:none!important}
+.hp-cart-float{display:flex!important;visibility:visible!important;opacity:1!important;z-index:99999!important}
+</style>
 <style id="hp-contact-icon-links-style">
 /* Three contact shortcuts in the empty area below the Contact details. */
 .hp-contact-shortcuts{
@@ -102,6 +106,87 @@ html,body{background:#111416!important;color:#f4f5f6!important;}
 (function(){function setLabel(){var el=document.getElementById('hp-contact-form-label');if(!el)return;var l='en';try{l=localStorage.getItem('hpmilk_lang')||'en'}catch(e){}el.textContent=({en:'Send a message',tr:'Mesaj gönder',ar:'إرسال رسالة',fa:'ارسال پیام',de:'Nachricht senden'})[l]||'Send a message';}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',setLabel);else setLabel();})();
 </script>
+
+<style id="hp-contact-footer-bottom-fix">
+@media (max-width:700px){
+  html,body{
+    min-height:100%!important;
+  }
+  body{
+    min-height:100dvh!important;
+    display:flex!important;
+    flex-direction:column!important;
+    box-sizing:border-box!important;
+    padding-bottom:82px!important;
+  }
+  .hp-top-region{flex:0 0 auto!important;}
+  .hp-main-region.hp-contact-compact{
+    flex:1 0 auto!important;
+    width:100%!important;
+  }
+  .hp-bottom-region{
+    flex:0 0 auto!important;
+    width:100%!important;
+    margin-top:auto!important;
+  }
+}
+</style>
+
+
+<style id="hp-contact-visible-form-and-single-phone">
+.hp-mobile-line{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+.hp-inline-phone{display:inline-flex;width:30px;height:30px;align-items:center;justify-content:center;vertical-align:middle;}
+.hp-inline-phone img{width:30px;height:30px;object-fit:contain;}
+.hp-contact-form-section{max-width:580px;margin:8px auto 10px;color:#fff;font:15px/1.4 Arial,Tahoma,sans-serif;}
+.hp-contact-form-heading{padding:9px 14px;background:#262e34;border:1px solid #46545e;border-radius:9px;text-align:center;font-weight:bold;}
+.hp-contact-form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;padding:10px 0 0;}
+.hp-contact-form label{display:flex;flex-direction:column;gap:4px;color:#fff;min-width:0;}
+.hp-contact-form input:not([type=submit]):not([type=reset]),.hp-contact-form textarea{width:100%;box-sizing:border-box;padding:8px;border:1px solid #a6adb3;border-radius:5px;background:#fff;color:#111;font:16px Arial,sans-serif;}
+.hp-contact-form label:has(textarea),.hp-contact-form-buttons{grid-column:1/-1;}
+.hp-contact-form-buttons{display:flex;justify-content:space-between;gap:12px;}
+.hp-contact-form-buttons input{padding:8px 18px;border:0;border-radius:6px;cursor:pointer;}
+.hp-contact-shortcuts{max-width:68px!important;width:68px!important;justify-content:center!important;margin:8px auto 8px!important;padding:0!important;}
+.hp-contact-shortcuts a{width:58px!important;height:58px!important;flex:0 0 58px!important;max-width:58px!important;max-height:58px!important;}
+.hp-contact-shortcuts img{width:58px!important;height:58px!important;max-width:58px!important;max-height:58px!important;}
+@media(max-width:700px){
+ .hp-contact-form-section{margin:8px auto 8px!important;}
+ .hp-contact-form{grid-template-columns:1fr;gap:8px;padding-top:8px;}
+ .hp-contact-form label:has(textarea),.hp-contact-form-buttons{grid-column:auto;}
+ .hp-contact-form input:not([type=submit]):not([type=reset]),.hp-contact-form textarea{padding:8px!important;}
+ .hp-contact-form textarea{min-height:75px!important;}
+ .hp-contact-shortcuts{margin:8px auto!important;}
+}
+</style>
+
+
+<style id="hp-readable-responsive-footer">
+.hp-bottom-region.hp-footer{
+  box-sizing:border-box!important;width:100%!important;height:auto!important;min-height:0!important;
+  padding:13px 18px!important;margin:0!important;overflow:visible!important;
+  background:linear-gradient(180deg,#337bad 0%,#174b83 100%)!important;
+  border-top:3px solid #58a9e6!important;border-bottom:3px solid #58a9e6!important;
+}
+.hp-footer-inner{
+  width:100%;max-width:1100px;margin:0 auto;display:flex;align-items:center;
+  justify-content:space-between;gap:12px 24px;flex-wrap:wrap;
+}
+.hp-footer-brand{color:#fff!important;font:700 16px/1.35 Verdana,Arial,sans-serif;
+  letter-spacing:.25px;text-shadow:0 1px 2px #071b38;
+}
+.hp-footer-email{display:inline-flex;align-items:baseline;gap:6px;max-width:100%;
+  color:#fff!important;font:14px/1.4 Arial,Tahoma,sans-serif;text-decoration:none!important;
+  overflow-wrap:anywhere;text-shadow:0 1px 2px #071b38;
+}
+.hp-footer-email span{font-weight:700;color:#fff!important;}
+.hp-footer-email strong{font-weight:600;color:#fff!important;text-decoration:underline;text-underline-offset:2px;}
+@media(max-width:700px){
+ .hp-bottom-region.hp-footer{padding:11px 14px!important;}
+ .hp-footer-inner{justify-content:center;text-align:center;gap:6px 12px;flex-direction:column;}
+ .hp-footer-brand{font-size:14px;line-height:1.4;}
+ .hp-footer-email{font-size:13px;gap:5px;justify-content:center;}
+}
+</style>
+
 </head><body>
 <div class="hp-top-region">
 <table align="center" background="CONTACTS_files/top_files/top_backgrnd.gif" border="0" cellpadding="0" cellspacing="0" valign="TOP" width="100%">
@@ -122,16 +207,11 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
     <p>For further information fill in the form or contact us at the address below:</p>
     <p class="hp-office-title"><strong>Head Office:</strong></p>
     <p>Kavakli Mah, Bilim Sok, A Blok No:7/1<br>Beylikdüzü / Istanbul</p>
-    <p><strong>Mobile :</strong> +90-5316216031</p>
+    <p class="hp-mobile-line"><a class="hp-inline-phone" href="tel:+905316216031" aria-label="Call HPmilk" title="Call HPmilk"><img src="hp-contact-icons/phone.svg" alt="Phone"></a><strong>+90-5316216031</strong></p>
   </section>
-  <div class="hp-contact-shortcuts" role="group" aria-label="Contact options">
-    <a href="tel:+905316216031" aria-label="Call HPmilk" title="Phone"><img src="hp-contact-icons/phone.svg" alt="Phone"></a>
-    <a href="mailto:hpmilk.tr@gmail.com" aria-label="Email HPmilk" title="Email"><img src="hp-contact-icons/email.svg" alt="Email"></a>
-    <a href="https://wa.me/905316216031" aria-label="WhatsApp HPmilk" title="WhatsApp" target="_blank" rel="noopener noreferrer"><img src="hp-contact-icons/whatsapp.svg" alt="WhatsApp"></a>
-  </div>
-  <details class="hp-contact-form-toggle">
-    <summary id="hp-contact-form-label">Send a message</summary>
-    <form action="mailto:hpmilk.tr@gmail.com" enctype="text/plain" method="post" onsubmit="return typeof checkData === 'function' ? checkData(this) : true">
+  <div class="hp-contact-form-section">
+    <div class="hp-contact-form-heading" id="hp-contact-form-label">Send a message</div>
+    <form class="hp-contact-form" action="mailto:hpmilk.tr@gmail.com" enctype="text/plain" method="post" onsubmit="return typeof checkData === 'function' ? checkData(this) : true">
       <label>Name and Surname<input name="nome" autocomplete="name"></label>
       <label>Company<input name="azie"></label>
       <label>Address<input name="indi" autocomplete="street-address"></label>
@@ -142,18 +222,12 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
       <label>Text<textarea name="testo" rows="3"></textarea></label>
       <div class="hp-contact-form-buttons"><input type="reset" value="Reset"><input type="submit" value="Send"></div>
     </form>
-  </details>
+  </div>
 </div>
-<div class="hp-bottom-region">
-<table align="center" background="CONTACTS_files/bottom_files/bot_backgrnd.gif" border="0" cellpadding="0" cellspacing="0" valign="TOP" width="100%">
-<tbody>
-<tr>
-<td><img alt="" border="0" height="61" src="CONTACTS_files/bottom_files/spacer.gif" width="1"/></td>
-<td class="ADD" valign="top" width="100%"><img alt="" border="0" height="17" src="CONTACTS_files/bottom_files/spacer.gif" width="1"/><br/>
-<font color="#ffffff" face="Verdana" size="1">MILKING MACHINES &amp; SPARE PARTS</font><font color="#ffffff" size="1"><span style="FONT-FAMILY: Verdana">
-</span></font></td>
-<td align="right" class="ADD" nowrap="" valign="top"><img alt="" border="0" height="17" src="CONTACTS_files/bottom_files/spacer.gif" width="1"/><br/>
-<a href="mailto:hpmilk.tr@gmail.com">Email: </a>
-<a class="ema" href="mailto:hpmilk.tr@gmail.com">hpmilk.tr@gmail.com</a><br/><img alt="" border="0" height="15" src="CONTACTS_files/bottom_files/spacer.gif" width="1"/><br/> </td>
-<td><img alt="" border="0" height="1" src="CONTACTS_files/bottom_files/spacer.gif" width="3"/></td></tr></tbody></table></div>
+<footer class="hp-bottom-region hp-footer" aria-label="Company footer">
+  <div class="hp-footer-inner">
+    <div class="hp-footer-brand">MILKING MACHINES &amp; SPARE PARTS</div>
+    <a class="hp-footer-email" href="mailto:hpmilk.tr@gmail.com"><span>Email:</span> <strong>hpmilk.tr@gmail.com</strong></a>
+  </div>
+</footer>
 <link rel="stylesheet" href="hp-shop.css"><script defer src="hp-shop.js"></script><link rel="stylesheet" href="hp-language.css"><script defer src="hp-language.js"></script></body></html>

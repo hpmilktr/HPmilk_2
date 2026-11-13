@@ -8,7 +8,7 @@
 <style>
 html,body{margin:0;width:100%;height:100%;overflow:hidden}
 .top{height:211px;border:0;width:100%;display:block}
-.main{height:calc(100% - 289px);min-height:200px;border:0;width:100%;display:block;overflow:auto}
+.main{height:auto;min-height:0;border:0;width:100%;display:block;overflow:auto}
 .bottom{height:78px;border:0;width:100%;display:block}
 </style>
 <style>
@@ -219,8 +219,7 @@ html,body{background:#111416;color:#f3f5f7;font-family:Arial,Helvetica,sans-seri
 @media(max-width:700px){
  html,body{width:100%!important;max-width:100%!important;overflow:hidden!important;}
  iframe.top{height:176px!important;}
- .main{height:calc(100dvh - 236px)!important;min-height:0!important;overflow-x:hidden!important;overflow-y:auto!important;padding:12px 0 20px!important;}
- iframe.bottom{height:60px!important;}
+ .main{height:calc(100dvh - 233px)!important;min-height:0!important;overflow-x:hidden!important;overflow-y:auto!important;padding:12px 0 20px!important;}
  .main>br{display:none!important;}
  .main>table:first-of-type{display:block!important;width:94%!important;max-width:94%!important;margin:12px auto 20px!important;table-layout:auto!important;}
  .main>table:first-of-type>tbody,.main>table:first-of-type>tbody>tr{display:block!important;width:100%!important;}
@@ -302,6 +301,74 @@ html,body{background:#111416;color:#f3f5f7;font-family:Arial,Helvetica,sans-seri
  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start);else start();
  window.addEventListener('resize',schedule);window.addEventListener('orientationchange',schedule);
 })();</script>
+<style id="hp-readable-responsive-footer">
+.hp-bottom-region.hp-footer{
+  box-sizing:border-box!important;width:100%!important;height:auto!important;min-height:0!important;
+  padding:13px 18px!important;margin:0!important;overflow:visible!important;
+  background:linear-gradient(180deg,#337bad 0%,#174b83 100%)!important;
+  border-top:3px solid #58a9e6!important;border-bottom:3px solid #58a9e6!important;
+}
+.hp-footer-inner{
+  width:100%;max-width:1100px;margin:0 auto;display:flex;align-items:center;
+  justify-content:space-between;gap:12px 24px;flex-wrap:wrap;
+}
+.hp-footer-brand{color:#fff!important;font:700 16px/1.35 Verdana,Arial,sans-serif;
+  letter-spacing:.25px;text-shadow:0 1px 2px #071b38;
+}
+.hp-footer-email{display:inline-flex;align-items:baseline;gap:6px;max-width:100%;
+  color:#fff!important;font:14px/1.4 Arial,Tahoma,sans-serif;text-decoration:none!important;
+  overflow-wrap:anywhere;text-shadow:0 1px 2px #071b38;
+}
+.hp-footer-email span{font-weight:700;color:#fff!important;}
+.hp-footer-email strong{font-weight:600;color:#fff!important;text-decoration:underline;text-underline-offset:2px;}
+@media(max-width:700px){
+ .hp-bottom-region.hp-footer{padding:11px 14px!important;}
+ .hp-footer-inner{justify-content:center;text-align:center;gap:6px 12px;flex-direction:column;}
+ .hp-footer-brand{font-size:14px;line-height:1.4;}
+ .hp-footer-email{font-size:13px;gap:5px;justify-content:center;}
+}
+</style>
+
+<style id="hp-footer-stick-to-viewport-bottom">
+html, body {
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 100% !important;
+  margin: 0 !important;
+  overflow: hidden !important;
+}
+body {
+  height: 100vh !important;
+  height: 100dvh !important;
+  display: flex !important;
+  flex-direction: column !important;
+}
+iframe.top {
+  display: block !important;
+  flex: 0 0 211px !important;
+  width: 100% !important;
+  height: 211px !important;
+  min-height: 211px !important;
+  border: 0 !important;
+}
+.main {
+  display: block !important;
+  flex: 1 1 auto !important;
+  width: 100% !important;
+  height: auto !important;
+  min-height: 0 !important;
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+}
+.hp-bottom-region.hp-footer {
+  position: relative !important;
+  display: block !important;
+  flex: 0 0 auto !important;
+  width: 100% !important;
+  margin: 0 !important;
+}
+</style>
+
 </head>
 <body>
 <iframe class="top" frameborder="0" scrolling="no" src="products_files/top.htm" target="_top"></iframe>
@@ -680,9 +747,12 @@ html,body{background:#111416;color:#f3f5f7;font-family:Arial,Helvetica,sans-seri
 </tr>
 </table>
 </div>
-<p>
-<iframe class="bottom" frameborder="0" scrolling="no" src="products_files/bottom.htm"></iframe>
-</p>
+<footer class="hp-bottom-region hp-footer" aria-label="Company footer">
+  <div class="hp-footer-inner">
+    <div class="hp-footer-brand">MILKING MACHINES &amp; SPARE PARTS</div>
+    <a class="hp-footer-email" href="mailto:hpmilk.tr@gmail.com"><span>Email:</span> <strong>hpmilk.tr@gmail.com</strong></a>
+  </div>
+</footer>
 <script>
 (function(){
   var lightbox, lbImage, lbDots, lbSlides=[], lbIndex=0;
@@ -838,7 +908,7 @@ html,body{background:#111416;color:#f3f5f7;font-family:Arial,Helvetica,sans-seri
   try{cart=JSON.parse(localStorage.getItem(CART_KEY)||'{}')||{};}catch(e){cart={};}
   function save(){try{localStorage.setItem(CART_KEY,JSON.stringify(cart));}catch(e){} render();window.dispatchEvent(new CustomEvent('hpmilk-cart-changed',{detail:cart}));}
   function esc(s){return String(s||'').replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
-  var launch=document.createElement('button');launch.type='button';launch.className='hp-cart-launch';launch.innerHTML='🛒 سبد سفارش <span class="hp-cart-count">0</span>';launch.setAttribute('aria-label','باز کردن سبد سفارش');document.body.appendChild(launch);
+  var launch=document.createElement('button');launch.type='button';launch.id='hp-cart-main-launch';launch.className='hp-cart-launch';launch.innerHTML='🛒 سبد سفارش <span class="hp-cart-count">0</span>';launch.setAttribute('aria-label','باز کردن سبد سفارش');var cartFooter=document.querySelector('.hp-bottom-region.hp-footer');(cartFooter||document.body).appendChild(launch);
   var shade=document.createElement('div');shade.className='hp-cart-shade';shade.innerHTML='<section class="hp-cart-panel" role="dialog" aria-modal="true" aria-labelledby="hp-cart-title"><div class="hp-cart-head"><h2 id="hp-cart-title">سبد سفارش HPmilk</h2><button type="button" class="hp-cart-x" aria-label="بستن">×</button></div><div class="hp-cart-items"></div><div class="hp-cart-total"></div><div class="hp-cart-note">قیمت نهایی و هزینه ارسال فعلاً به‌صورت دستی با فروشنده هماهنگ می‌شود. با ارسال سفارش، پرداختی انجام نمی‌شود.</div><form class="hp-cart-form"><label>نام و نام خانوادگی *<input name="customer" required autocomplete="name" placeholder="نام شما"></label><label>ایمیل<input name="email" type="email" autocomplete="email" placeholder="name@example.com"></label><label>تلفن / واتساپ<input name="phone" type="tel" autocomplete="tel" placeholder="شماره تماس"></label><label>کشور / شهر<input name="location" autocomplete="country-name" placeholder="کشور و شهر"></label><label class="hp-cart-wide">آدرس یا توضیحات سفارش<textarea name="notes" placeholder="آدرس تحویل، مشخصات یا سؤال درباره محصول"></textarea></label><div class="hp-cart-wide hp-cart-actions"><button type="button" class="hp-cart-email">ارسال سفارش با ایمیل</button><button type="button" class="hp-cart-wa">ارسال سفارش با واتساپ</button></div></form></section>';
   document.body.appendChild(shade);
   var itemsEl=shade.querySelector('.hp-cart-items'),totalEl=shade.querySelector('.hp-cart-total'),countEl=launch.querySelector('.hp-cart-count');
@@ -871,6 +941,104 @@ html,body{background:#111416;color:#f3f5f7;font-family:Arial,Helvetica,sans-seri
  border:1px solid #cbd5e1!important;
 }
 </style>
+
+<style id="hp-cart-one-button-corrected">
+/* One cart button, centered inside the footer bar. */
+.hp-bottom-region.hp-footer{position:relative!important;}
+#hp-cart-main-launch.hp-cart-launch{
+  display:flex!important;
+  position:absolute!important;
+  left:50%!important;
+  right:auto!important;
+  top:50%!important;
+  bottom:auto!important;
+  transform:translate(-50%,-50%)!important;
+  width:164px!important;
+  min-width:164px!important;
+  max-width:164px!important;
+  height:44px!important;
+  min-height:44px!important;
+  margin:0!important;
+  padding:7px 12px!important;
+  box-sizing:border-box!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:8px!important;
+  border:1px solid rgba(255,255,255,.45)!important;
+  border-radius:24px!important;
+  background:#e9004f!important;
+  color:#fff!important;
+  font:700 13px/1.15 Arial,Tahoma,sans-serif!important;
+  white-space:normal!important;
+  text-align:center!important;
+  z-index:100000!important;
+  box-shadow:0 4px 14px rgba(0,0,0,.28)!important;
+  cursor:pointer!important;
+}
+#hp-cart-main-launch .hp-cart-count{
+  display:inline-flex!important;
+  flex:0 0 27px!important;
+  width:27px!important;
+  min-width:27px!important;
+  max-width:27px!important;
+  height:27px!important;
+  min-height:27px!important;
+  margin:0!important;
+  padding:0!important;
+  box-sizing:border-box!important;
+  align-items:center!important;
+  justify-content:center!important;
+  border-radius:50%!important;
+  background:#ffdf24!important;
+  color:#111!important;
+  -webkit-text-fill-color:#111!important;
+  border:2px solid #fff!important;
+  font:800 14px/1 Arial,sans-serif!important;
+  text-shadow:none!important;
+}
+@media(max-width:700px){
+  #hp-cart-main-launch.hp-cart-launch{width:150px!important;min-width:150px!important;max-width:150px!important;height:40px!important;min-height:40px!important;font-size:12px!important;}
+  #hp-cart-main-launch .hp-cart-count{flex-basis:25px!important;width:25px!important;min-width:25px!important;max-width:25px!important;height:25px!important;min-height:25px!important;}
+}
+</style>
+<script id="hp-cart-remove-extra-launchers">
+(function(){
+  var cartWords=/shopping\s*cart|سبد\s*(?:سفارش|خرید)|alışveriş\s*sepeti|🛒/i;
+  function removeExtraCartButtons(){
+    var main=document.getElementById('hp-cart-main-launch');
+    var footer=document.querySelector('.hp-bottom-region.hp-footer');
+    if(main && footer && main.parentElement!==footer) footer.appendChild(main);
+
+    /* Remove only other floating/cart launch controls; preserve the main cart and cart contents. */
+    var candidates=Array.from(document.querySelectorAll('button,a,[role="button"],[id*="cart" i],[class*="cart" i]'));
+    candidates.forEach(function(el){
+      if(!el || el===main || (main && el.contains(main)) || (main && main.contains(el))) return;
+      var txt=(el.innerText||el.textContent||'').replace(/\s+/g,' ').trim();
+      if(!cartWords.test(txt)) return;
+      var cs=window.getComputedStyle(el);
+      var fixed=cs.position==='fixed' || cs.position==='absolute';
+      var hasCartName=/cart|basket|shopping|سبد|sepet/i.test((el.id||'')+' '+(el.className&&typeof el.className==='string'?el.className:''));
+      if(fixed || hasCartName){
+        /* Do not remove the full cart dialog/panel or its internal controls. */
+        if(el.closest('.hp-cart-panel,.hp-cart-shade')) return;
+        el.remove();
+      }
+    });
+  }
+  function start(){
+    removeExtraCartButtons();
+    if(document.body){
+      var observer=new MutationObserver(function(){removeExtraCartButtons();});
+      observer.observe(document.body,{childList:true,subtree:true});
+    }
+    window.addEventListener('load',removeExtraCartButtons);
+    document.addEventListener('DOMContentLoaded',removeExtraCartButtons);
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',start,{once:true});
+  else start();
+})();
+</script>
+
 </body>
 
 
